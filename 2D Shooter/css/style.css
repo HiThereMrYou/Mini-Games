@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #1a1a1a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+#gameWrap {
+  display: flex;
+  gap: 20px;
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  max-width: 900px;
+}
+
+canvas {
+  border: 2px solid #444;
+  background: #000;
+  display: block;
+  width: 640px;
+  height: 480px;
+  image-rendering: auto;
+  box-shadow: 0 6px 30px rgba(0, 160, 120, 0.08), inset 0 0 12px rgba(0,0,0,0.4);
+}
+
+#ui {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#ui h1 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #4CAF50;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.stat {
+  margin: 8px 0;
+  font-size: 16px;
+  padding: 8px;
+  background: #333;
+  border-radius: 4px;
+  border-left: 4px solid #4CAF50;
+}
+
+.stat span {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 5px 0;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.controls {
+  background: #333;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  border-left: 4px solid #2196F3;
+}
+
+.controls ul {
+  margin-left: 20px;
+  margin-top: 8px;
+}
+
+.controls li {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+
+.footer {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 11px;
+  color: #888;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.footer code {
+  background: #333;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #4CAF50;
+}
+
+@media (max-width: 900px) {
+  #gameWrap {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  canvas {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}

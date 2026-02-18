@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcane Forest: Tower Defense</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="ui-bottom" class="show-shop">
+            <div class="shop-panel" id="stats-panel">
+                <h3>Forest Status</h3>
+                <div class="stat">Life: <span id="life-val">20</span></div>
+                <div class="stat">Mana: <span id="mana-val">100</span></div>
+                <div class="stat">Wood: <span id="wood-val">0</span></div>
+                <div class="stat">Wave: <span id="wave-timer">--</span></div>
+                <button class="shop-btn" id="btn-next-wave" style="margin-top: 10px; width: 100%;">Next Wave ⏭️</button>
+            </div>
+            
+            <div class="shop-panel">
+                <h3>Towers (Mana)</h3>
+                <div class="shop-row">
+                    <button class="shop-btn" id="btn-tower-basic" title="50 Mana">[1] 🏹 Archer (50)</button>
+                    <button class="shop-btn" id="btn-tower-fast" title="100 Mana">[2] ⚡ Bolt (100)</button>
+                    <button class="shop-btn" id="btn-tower-aoe" title="150 Mana">[3] 💥 Blast (150)</button>
+                    <button class="shop-btn" id="btn-tower-sniper" title="250 Mana">[4] 🎯 Sniper (250)</button>
+                    <button class="shop-btn" id="btn-tower-slow" title="200 Mana">[5] ❄️ Slow (200)</button>
+                </div>
+            </div>
+            
+            <div class="shop-panel">
+                <h3>Actions & Spells</h3>
+                <div class="shop-row">
+                    <button class="shop-btn" id="btn-upgrade" title="Click a tower to Upgrade">💎 Upgrade</button>
+                    <button class="shop-btn" id="btn-chop">🪓 Chop Tree</button>
+                    <button class="shop-btn" id="btn-tower-wall" title="20 Wood">🧱 Wall (20W)</button>
+                    <button class="shop-btn" id="btn-spell-fire" title="30 Mana">🔥 Fireball (30)</button>
+                    <button class="shop-btn" id="btn-spell-freeze" title="60 Mana">🌪️ Blizzard (60)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="game.js"></script>
+</body>
+</html>

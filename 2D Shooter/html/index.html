@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>2D Shooter — Joel's Waste of a Game</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <div id="gameWrap">
+        <canvas id="screen" width="640" height="480"></canvas>
+        <div id="ui">
+            <h1>2D Shooter</h1>
+            <div class="stat">Score: <span id="score">0</span></div>
+            <div class="stat">High Score: <span id="highScore">0</span></div>
+            <div class="stat">Survived: <span id="survival">0s</span></div>
+            <div class="stat">Lives: <span id="lives">3</span></div>
+            <div class="stat">Wave: <span id="wave">0</span></div>
+            <div class="stat">Enemies: <span id="enemies">0</span></div>
+            <div style="margin-top:12px">
+                <button id="startBtn">Start / Restart</button>
+                <button id="pauseBtn">Pause</button>
+            </div>
+            <hr style="opacity:.06;margin:12px 0" />
+            <div class="controls">
+                Controls:
+                <ul>
+                    <li>Move: ← / → or A / D</li>
+                    <li>Shoot: Space</li>
+                    <li>Pause: P</li>
+                    <li>Restart: R</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer">Joel's Waste of a Game — Press Start to begin!</div>
+
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

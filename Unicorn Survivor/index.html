@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicorn Survivor: Battle Royale</title>
+    <link rel="stylesheet" href="css/ui/core/style.css">
+</head>
+<body>
+
+    <div id="ui-layer">
+        <div class="stat-box">
+            <div>🦄 Unicorns (Gold): <span id="gold">0</span></div>
+            <div>⏱️ Survival Time: <span id="time">0s</span></div>
+            <div id="health-bar-container"><div id="health-bar"></div></div>
+            <div style="font-size: 0.8rem; margin-top: 5px;">HP: <span id="hp-text">100/100</span></div>
+        </div>
+        <div style="color: #aaa; font-size: 0.9rem;">WASD to Move | Click to Shoot Rainbows | E to Open Shop</div>
+    </div>
+
+    <div id="shop-menu">
+        <h2>Magical Armory</h2>
+        <div id="upgrade-list"></div>
+        <button onclick="toggleShop()" style="width: 100%; padding: 10px; margin-top: 10px; background: #555; color: white; border: none; border-radius: 5px; cursor: pointer;">Close Shop (E)</button>
+    </div>
+
+    <div id="overlay">
+        <h1>UNICORN SURVIVOR</h1>
+        <p>The military is coming for your magic. Survive as long as you can!</p>
+        <p style="color: #ff99cc; font-weight: bold; margin-top: 10px;">Press 'E' during battle to open the shop!</p>
+        <button class="start-btn" onclick="startGame()">START BATTLE</button>
+    </div>
+
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Core Engine & Physics -->
+    <script src="js/core/physics.js"></script>
+    <script src="js/core/persistence.js"></script>
+    
+    <!-- Game Data & Entities -->
+    <script src="js/enemies/enemies.js"></script>
+    <script src="js/upgrades/upgrades.js"></script>
+    
+    <!-- Main Game Loop -->
+    <script type="module" src="js/core/game.js"></script>
+</body>
+</html>
