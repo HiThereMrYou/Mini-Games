@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Games — Joel</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0f14;
+      --surface:  #151821;
+      --border:   #272b38;
+      --accent:   #7c6dfa;
+      --accent2:  #fa6d8f;
+      --text:     #e8eaf0;
+      --muted:    #7a7f95;
+      --radius:   14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Stars background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15%  20%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 45%  55%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 72%  10%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 88%  70%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 30%  80%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 60%  35%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 5%   60%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 95%  30%, #fff 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 50% 90%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 20% 45%, rgba(255,255,255,.6) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(13,15,20,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 1.4rem; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: .3rem .9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: .78rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    /* Glow blob */
+    .blob {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,109,250,.18) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ── Games grid ── */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem 6rem;
+    }
+    .section-label {
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: .75rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--card-color, var(--accent)) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-color, var(--accent));
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .card:hover::before { opacity: .07; }
+
+    .card-icon {
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    .card-desc {
+      font-size: .875rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .card-tag {
+      display: inline-block;
+      padding: .2rem .65rem;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.06);
+      color: var(--card-color, var(--accent));
+      border: 1px solid var(--card-color, var(--accent));
+      width: fit-content;
+    }
+    .card-cta {
+      font-size: .85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      margin-top: .2rem;
+      transition: color .2s;
+    }
+    .card:hover .card-cta { color: var(--text); }
+    .card-cta svg { transition: transform .2s; }
+    .card:hover .card-cta svg { transform: translateX(3px); }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">🎮 Mini Games</span>
+    <div class="nav-links">
+      <a href="https://github.com/HiThereMrYou/Mini-Games" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="blob"></div>
+    <div class="hero-badge">All games — browser only</div>
+    <h1>Joel's Mini<br>Game Arcade</h1>
+    <p>A collection of hand-crafted mini-games built with vanilla JavaScript and HTML5 Canvas. Pick one and play.</p>
+  </header>
+
+  <main class="section">
+    <p class="section-label">Choose a game</p>
+    <div class="grid">
+
+      <!-- 2D Shooter -->
+      <a class="card" href="2D Shooter/html/index.html" style="--card-color:#fa6d6d">
+        <div class="card-icon">🚀</div>
+        <div class="card-title">2D Shooter</div>
+        <div class="card-desc">Survive endless waves of enemies in this fast-paced top-down space shooter. How long can you last?</div>
+        <div class="card-tag">Shooter</div>
+        <div class="card-cta">
+          Play now
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Geometry Dash -->
+      <a class="card" href="GeometryDash/index.html" style="--card-color:#facc6d">
+        <div class="card-icon">🟨</div>
+        <div class="card-title">Geometry Dash</div>
+        <div class="card-desc">Jump and fly your way through increasingly difficult levels in this rhythm-based platformer clone.</div>
+        <div class="card-tag">Platformer</div>
+        <div class="card-cta">
+          Play now
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Tower Defence -->
+      <a class="card" href="Tower Defence/index.html" style="--card-color:#6dfa9a">
+        <div class="card-icon">🌲</div>
+        <div class="card-title">Arcane Forest</div>
+        <div class="card-desc">Protect the forest from waves of invaders by building and upgrading magical towers. Spend mana wisely.</div>
+        <div class="card-tag">Tower Defence</div>
+        <div class="card-cta">
+          Play now
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Unicorn Survivor -->
+      <a class="card" href="Unicorn Survivor/index.html" style="--card-color:#c96dfa">
+        <div class="card-icon">🦄</div>
+        <div class="card-title">Unicorn Survivor</div>
+        <div class="card-desc">Battle waves of enemies, collect gold unicorns, and upgrade your rainbow-shooting unicorn. Last one standing wins.</div>
+        <div class="card-tag">Survivor</div>
+        <div class="card-cta">
+          Play now
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    Built by Joel &mdash; <a href="https://github.com/HiThereMrYou/Mini-Games" target="_blank" rel="noopener">View source on GitHub</a>
+  </footer>
+
+</body>
+</html>
