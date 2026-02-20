@@ -1,10 +1,28 @@
-import { gameState, GRAVITY, JUMP_FORCE, GROUND_Y } from '../core/constants.js';
+import { gameState, GRAVITY, JUMP_FORCE, GROUND_Y, GAME_SPEED } from '../core/constants.js';
 import { createExplosion } from '../entities/particle.js';
 
 export function update(player) {
     if (gameState.gameActive) {
-        player.trail.push({ x: player.x, y: player.y, rotation: player.rotation, mode: player.mode });
-        if (player.trail.length > 8) player.trail.shift();
+        // Update existing trail points to move with the level
+        player.trail.forEach(t => {
+            t.x -= GAME_SPEED;
+        });
+
+        if (player.mode === 'wave') {
+            player.trail.push({ 
+                x: player.x, 
+                y: player.y, 
+                rotation: player.rotation, 
+                mode: player.mode 
+            });
+        } else {
+            // Clear trail if not in wave mode (or let it bleed out)
+            // If you want it to disappear instantly when switching:
+            player.trail = [];
+        }
+
+        const maxTrailLength = 150;
+        if (player.trail.length > maxTrailLength) player.trail.shift();
     }
 
     if (player.mode === 'ship') {

@@ -44,8 +44,18 @@ function update() {
 
     gameState.obstacles.forEach((obstacle) => {
         obstacle.update();
+        
+        // Spike collision (Death)
         if ((obstacle.type === 'spike' || obstacle.type === 'ceiling-spike') && checkCollision(player, obstacle)) {
             gameOver();
+        }
+
+        // Portal collision (Change mode)
+        if (obstacle.type.startsWith('portal-') && checkCollision(player, obstacle)) {
+            const newMode = obstacle.type.split('-')[1];
+            if (player.mode !== newMode) {
+                player.mode = newMode;
+            }
         }
     });
 
